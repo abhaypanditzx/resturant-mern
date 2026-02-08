@@ -35,7 +35,6 @@ const registerUser = async (req, res) => {
       name: name,
       password: hashedPassword,
       email: email,
-    
     });
     await user.save();
     return res.json({ msg: "user registered successfully", success: true });
@@ -52,9 +51,13 @@ const loginUser = async (req, res) => {
     if (!existingUser) {
       return res.json({ msg: "user does not exist" });
     }
-    const comparePassword = await bcrypt.compare(password, existingUser.password);
+    const comparePassword = await bcrypt.compare(
+      password,
+      existingUser.password,
+    );
+    
     if (!comparePassword) {
-      return res.json({ msg: "incorrect password" });
+      return res.json({ msg: "pm password" });
     }
 
     generateToken(res, {
@@ -67,19 +70,22 @@ const loginUser = async (req, res) => {
       user: { name: existingUser.name, email: existingUser.email },
     });
   } catch (err) {
+    console.error("LOGIN ERROR 👉", err);
     return res.json({ msg: "internal server error", success: false });
   }
 };
 
 const adminLogin = async (req, res) => {
+  console.log("admin login route hit ");
   try {
     const { email, password } = req.body;
-
+    
     if (!password || !email) {
       return res.json({ msg: "please fill all the fields", success: false });
     }
+    console.log(`email:${email} password:${password}`)
 
-    const adminEmail = process.env.ADMIN_Email;
+    const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (email !== adminEmail || password !== adminPassword) {
@@ -96,6 +102,7 @@ const adminLogin = async (req, res) => {
     });
     res.json({ msg: "admi logged in successfully", success: true });
   } catch (err) {
+    console.error("LOGIN ERROR 👉", err);
     return res.json({ msg: "internal server error", success: false });
   }
 };
@@ -109,4 +116,22 @@ const logoutUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, adminLogin, registerUser, logoutUser };
+const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ msg: "user not found", success: false });
+    }
+    res.json(user);
+  } catch (err) {
+    return res.json({ msg: "internal server error", success: false });
+  }
+};
+
+module.exports = {
+  loginUser,
+  adminLogin,
+  registerUser,
+  logoutUser,
+  getProfile,
+};
