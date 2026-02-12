@@ -55,9 +55,9 @@ const loginUser = async (req, res) => {
       password,
       existingUser.password,
     );
-    
+
     if (!comparePassword) {
-      return res.json({ msg: "pm password" });
+      return res.json({ msg: "incorrect password" });
     }
 
     generateToken(res, {
@@ -79,11 +79,11 @@ const adminLogin = async (req, res) => {
   console.log("admin login route hit ");
   try {
     const { email, password } = req.body;
-    
+
     if (!password || !email) {
       return res.json({ msg: "please fill all the fields", success: false });
     }
-    console.log(`email:${email} password:${password}`)
+    console.log(`email:${email} password:${password}`);
 
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
@@ -100,7 +100,7 @@ const adminLogin = async (req, res) => {
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,
     });
-    res.json({ msg: "admi logged in successfully", success: true });
+    res.json({ msg: "admin logged in successfully", success: true });
   } catch (err) {
     console.error("LOGIN ERROR 👉", err);
     return res.json({ msg: "internal server error", success: false });
