@@ -64,7 +64,7 @@ const updateBookings = async (req,res) => {
     console.log("update status route hit")
     const {bookingId} = req.params;
     const {status} = req.body;
-    const booking = await Booking.findOne({_id:bookingId});
+    const booking = await Booking.findById(bookingId);
     if (!booking) {
       return res.status(404), json({ msg: "booking not found" });
     }

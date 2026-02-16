@@ -10,7 +10,7 @@ const {
 
 bookingRoutes.post("/create", protect, createBooking);
 bookingRoutes.get("/my-bookings", protect, getUserBookings);
-bookingRoutes.get("/bookings", adminOnly, getAllBookings);
-bookingRoutes.put("/update-status/:bookingId", adminOnly, updateBookings);
+bookingRoutes.get("/bookings", protect, adminOnly, getAllBookings);
+bookingRoutes.put("/update-status/:bookingId",protect, adminOnly, updateBookings);
 
 module.exports = bookingRoutes;

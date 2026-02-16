@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
       email: email,
     });
     await user.save();
-    return res.json({ msg: "user registered successfully", success: true });
+    return res.json({ msg: "user registered successfully", success: true,user:{email:user.email,name:user.name}});
   } catch (err) {
     console.log(err);
     return res.json({ msg: "internal server error", success: false });
@@ -47,6 +47,9 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log('login route hit by client')
+    console.log('data from client: '+ email + " "+ password);
+
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
       return res.json({ msg: "user does not exist" });
@@ -57,7 +60,8 @@ const loginUser = async (req, res) => {
     );
 
     if (!comparePassword) {
-      return res.json({ msg: "incorrect password" });
+      console.log("incorrect password")
+      return res.status(401).json({ msg: "incorrect password" });
     }
 
     generateToken(res, {
@@ -69,6 +73,7 @@ const loginUser = async (req, res) => {
       success: true,
       user: { name: existingUser.name, email: existingUser.email },
     });
+    console.log("user logged in")
   } catch (err) {
     console.error("LOGIN ERROR 👉", err);
     return res.json({ msg: "internal server error", success: false });
@@ -76,7 +81,6 @@ const loginUser = async (req, res) => {
 };
 
 const adminLogin = async (req, res) => {
-  console.log("admin login route hit ");
   try {
     const { email, password } = req.body;
 

@@ -7,7 +7,7 @@ if(!token){
 try{
 const decoded =  jwt.verify(token,process.env.SECRET_KEY);
     req.user =  decoded;
-    next()
+    next();
 }
 catch(err){
     return res.status(401).json({msg:"invalid token",success:false})

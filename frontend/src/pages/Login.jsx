@@ -1,0 +1,102 @@
+import React, { useContext, useState } from "react";
+import { Eye, EyeClosed, Lock, Mail } from "lucide-react";
+import { AppContext } from "../context/AppContext";
+import axios from "axios";
+const Login = () => {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const handleChange = (e) => {
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        data,
+      );
+      console.log("response from server:", res.data.user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(data);
+  const { navigate } = useContext(AppContext);
+  return (
+    <div className="flex justify-center items-center  h-screen w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white"
+      >
+        <h1 className="text-gray-900 text-3xl mt-10 font-medium">Login</h1>
+        <p className="text-gray-500 text-sm mt-2">Please Login to continue</p>
+
+        <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+          <Mail height={16} width={20} className="text-[#6B7280]" />
+          <input
+            type="email"
+            name="email"
+            autoComplete="email"
+            placeholder="Email id"
+            className="border-none outline-none ring-0"
+            value={data.email}
+            onChange={(e) => handleChange(e)}
+            required
+          />
+        </div>
+        <div className="flex items-center relative mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
+          <Lock height={16} width={20} className="text-[#6B7280]" />
+          <input
+            type={isPasswordVisible ? "text" : "password"}
+            name="password"
+          autoComplete="current-password"
+            placeholder="Password"
+            value={data.password}
+            className="border-none outline-none ring-0"
+            onChange={(e) => handleChange(e)}
+            required
+          />
+
+          {!isPasswordVisible ? (
+            <Eye
+              height={16}
+              width={20}
+              className="text-[#6B7280] absolute right-2 cursor-pointer hover:text-gray-400 transition-colors"
+              onClick={() => setIsPasswordVisible(true)}
+            />
+          ) : (
+            <EyeClosed
+              height={16}
+              width={20}
+              className="text-[#6B7280]  absolute right-2 cursor-pointer  hover:text-gray-400 transition-colors"
+              onClick={() => setIsPasswordVisible(false)}
+            />
+          )}
+        </div>
+
+        <button
+          type="submit"
+          className="mt-2 w-full h-11 rounded-full text-white bg-orange-500 cursor-pointer hover:opacity-90 transition-opacity"
+        >
+          Login
+        </button>
+        <p className="text-gray-500 text-sm mt-3 mb-11">
+          Don't have an account?
+          <button
+            type="button"
+            onClick={() => navigate("/signup")}
+            className="text-orange-500 cursor-pointer hover:underline"
+          >
+            click here
+          </button>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
