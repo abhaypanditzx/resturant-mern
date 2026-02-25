@@ -1,38 +1,32 @@
-const jwt = require('jsonwebtoken');
- const   protect = (req,res,next)=>{
-const token = req.cookies.token;
-if(!token){
-    return res.status(401).json({msg:"not authorized",success:false})
-}
-try{
-const decoded =  jwt.verify(token,process.env.SECRET_KEY);
-    req.user =  decoded;
+const jwt = require("jsonwebtoken");
+const protect = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ message: "Not Authorized", success: false });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
-}
-catch(err){
-    return res.status(401).json({msg:"invalid token",success:false})
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
 
-}
- }
-
-
-
- const adminOnly =(req,res,next)=>{
-const token  =  req.cookies.token;
-if(!token){
-    return res.status(401).json({msg:"not authorized",success:false})
-
-}
-try{
-    const decoded  = jwt.verify(token,process.env.SECRET_KEY);
-    req.admin  = decoded;
-    if(req.admin.email == process.env.ADMIN_EMAIL ){
-        next();
+const adminOnly = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({ message: "Not Authorized", success: false });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.admin = decoded;
+    if(decoded.role !== "admin"){
+    return res.status(401).json({ message: "Not Authorized", success: false });
     }
-}catch(err){
-    return res.status(401).json({msg:"invalid token",succes:false})
-
-}
- }
-
- module.exports ={protect,adminOnly}
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+module.exports = { adminOnly, protect };

@@ -1,12 +1,27 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import logo from "../assets/logo.png";
-import { LogOut, Menu, Package, ShoppingCart, User, UserCircle } from "lucide-react";
+import { Calendar, LogOut, Menu, Package, ShoppingCart, User, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 const Navbar = () => {
-  const { navigate, user, setUser } = useContext(AppContext);
+  const { navigate, user, setUser,api } = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const handleLogout = async() => {
+    try {
+      const {data} = await api.post("/api/auth/logout")
+      if(data.success){
+        setUser(null)
+        toast.success(data.msg)
+navigate("/")
+      }
+    } catch (error) {
+     console.error(error) 
+    }
+  }
+  console.log(user)
 
   return (
     <nav className="py-3 bg-cyan-50 w-full flex justify-around items-center shadow-md sticky top-0 z-50">
@@ -74,11 +89,19 @@ const Navbar = () => {
                         to={"/my-bookings"}
                         className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       >
+                        <Calendar size={18} className="mr-3" />
+                        My Orders
+                      </Link>
+                      <Link
+                        to={"/my-orders"}
+                        className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                      >
                         <Package size={18} className="mr-3" />
                         My Orders
                       </Link>
-                      <button className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
+                      <button onClick={()=>handleLogout()} className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
                         <LogOut size={18} className="mr-3" />
+                        Logout
                       </button>
                     </div>
                   )}
@@ -143,7 +166,7 @@ const Navbar = () => {
                         <Package size={18} className="mr-3" />
                         My Orders
                       </Link>
-                      <button className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
+                      <button  onClick ={()=>handleLogout()} className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
                         <LogOut size={18} className="mr-3" />
                       </button>
                     </div>

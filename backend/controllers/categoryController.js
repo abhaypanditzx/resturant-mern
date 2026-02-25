@@ -4,6 +4,7 @@ const cloudinary = require("cloudinary").v2;
 const addCategory = async (req, res) => {
   try {
     const { name } = req.body;
+    console.log(name,req.file)
     if (!name || !req.file) {
       return res
         .status(400)
@@ -21,9 +22,7 @@ const addCategory = async (req, res) => {
       name,
       image: result.secure_url,
     });
-    return res
-      .status(201)
-      .json({ msg: "category added", success: true, Category: newCategory });
+    return res.status(201).json({ msg: "category added", success: true, Category: newCategory });
   } catch (err) {
     console.log(err)
     return res.json({ msg: "internal server error ", success: false });
@@ -64,9 +63,9 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     const category = await Category.findByIdAndDelete(id);
-
+console.log("category delete route hit",id);
     if (!category) {
       return res.status(404).json({ msg: "category not found" });
     }

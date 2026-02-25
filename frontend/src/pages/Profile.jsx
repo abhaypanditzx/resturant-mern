@@ -2,10 +2,13 @@ import React, { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 
 const Profile = () => {
-    const{name} =useContext(AppContext)
+    const{user} =useContext(AppContext)
+
+    
   return (
-    <div>{'hello there '+name}</div>
+    <div>{'hello there '+user?.name}</div>
   )
 }
 
 export default Profile
+

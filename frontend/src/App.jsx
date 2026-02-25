@@ -13,14 +13,26 @@ import Menu from "./pages/Menu.jsx";
 import Contact from "./pages/Contact.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { ToastBar, Toaster } from "react-hot-toast";
+import Profile from "./pages/Profile.jsx";
+import Footer from "./components/Footer.jsx";
+import AdminLayout from "./pages/admin/AdminLayout.jsx"
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+import AddCategory from "./pages/admin/AddCategory.jsx";
+import AddMenu from "./pages/admin/AddMenu.jsx";
+import Bookings from "./pages/admin/Bookings.jsx";
+import Categories from "./pages/admin/Categories.jsx";
+import Menus from "./pages/admin/Menus.jsx";
+import Orders from "./pages/admin/Orders.jsx";
+import Dashboard from "./pages/admin/Dashboard.jsx"
 
 const App = () => {
-  const { navigate } = useContext(AppContext);
+  const { navigate ,admin} = useContext(AppContext);
   const adminPath = useLocation().pathname.includes("admin");
   return (
     <>
     {!adminPath && <Navbar/>}
-    
+    <Toaster/>
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Login />} path="/login" />
@@ -33,7 +45,25 @@ const App = () => {
         <Route element={<Cart />} path="/cart" />
         <Route element={<BookTable />} path="/book-table" />
         <Route element={<MyOrders />} path="/my-orders" />
+        <Route element={<Profile />} path="/profile" />
+
+        {/* admin routes  */}
+
+        <Route element={admin? <AdminLayout/>: <AdminLogin/>} path="/admin">
+        <Route element={admin ? <Dashboard/> : <AdminLogin/>} path="dashboard"/>
+        <Route element={admin ? <Bookings/> : <AdminLogin/>} path="bookings" />
+        <Route element={admin ? <Categories/> : <AdminLogin/>} path="categories" />
+        <Route element={admin ? <Menus/> : <AdminLogin/>} path="menus" />
+        <Route element={admin ? <Orders/> : <AdminLogin/>} path="orders" />
+        <Route element={admin ? <AddCategory/> : <AdminLogin/>} path="add-category" />
+        <Route element={admin ? <AddMenu/> : <AdminLogin/>} path="add-menu" />
+        <Route element={admin ? <AdminLayout/> : <AdminLogin/>} path="layout" />
+        
+        </Route>
       </Routes>
+
+
+     {!adminPath && <Footer/>}
     </>
   );
 };

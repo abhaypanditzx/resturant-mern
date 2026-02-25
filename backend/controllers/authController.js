@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 //generate jwt token
 
 const generateToken = (res, payload) => {
-  const token = jwt.sign(payload, process.env.SECRET_KEY, {
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 
@@ -52,15 +52,15 @@ const loginUser = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res.json({ msg: "user does not exist" });
-    }
+      return res.status(404).json({ msg: "user does not exist" });
+    }    
     const comparePassword = await bcrypt.compare(
       password,
       existingUser.password,
     );
-
+    
+    
     if (!comparePassword) {
-      console.log("incorrect password")
       return res.status(401).json({ msg: "incorrect password" });
     }
 
@@ -68,6 +68,7 @@ const loginUser = async (req, res) => {
       id: existingUser._id,
       role: existingUser.isAdmin ? "admin" : "user",
     });
+
     res.json({
       msg: "user logged in successfully",
       success: true,
@@ -80,37 +81,93 @@ const loginUser = async (req, res) => {
   }
 };
 
-const adminLogin = async (req, res) => {
+// const adminLogin = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     if (!password || !email) {
+//       return res.json({ msg: "please fill all the fields", success: false });
+//     }
+//     console.log(`email:${email} password:${password}`);
+
+//     const adminEmail = process.env.ADMIN_EMAIL;
+//     const adminPassword = process.env.ADMIN_PASSWORD;
+
+//     if (email !== adminEmail || password !== adminPassword) {
+//       return res.json({ msg: "invalid credentials", success: false });
+//     }
+//     const token = jwt.sign({ 
+//       role:"admin",
+//       email }, process.env.SECRET_KEY, {
+//       expiresIn: "1d",
+//     });
+//     res.cookie("token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//       sameSite: "strict",
+//       maxAge: 24 * 60 * 60 * 1000,
+//     });
+//     res.json({admin:{admin:adminEmail}, msg: "admin logged in successfully", success: true});
+//     console.log("logged in success");
+//   } catch (err) {
+//     console.error("LOGIN ERROR 👉", err);
+//     return res.json({ msg: "internal server error", success: false });
+//   }
+// };
+
+
+ const adminLogin = async (req, res) => {
   try {
+    console.log("admin login route hit ");
+    
     const { email, password } = req.body;
-
-    if (!password || !email) {
-      return res.json({ msg: "please fill all the fields", success: false });
+    if (!email || !password) {
+      return res.json({
+        msg: "Please fill all the fields",
+        success: false,
+      });
     }
-    console.log(`email:${email} password:${password}`);
-
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-
-    if (email !== adminEmail || password !== adminPassword) {
-      return res.json({ msg: "invalid credentials", success: false });
+    const existingAdmin = await User.findOne({email})
+    if(!existingAdmin) {
+      return res.status(401).json({msg:"admin does not exist!",success: false});
     }
-    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
+    console.log(existingAdmin.password)
+ const isPasswordMatch = await  bcrypt.compare(password, existingAdmin.password);
+    if (!isPasswordMatch) {
+      console.log("password does not match oppsie")
+      return res.json({ msg: "Invalid credentials", success: false });
+    }
+    console.log("password  does match");
+
+    const token = jwt.sign({ 
+     id: existingAdmin._id,
+      role: existingAdmin.isAdmin ? "admin" : "user",
+    }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,
+
     });
-    res.json({ msg: "admin logged in successfully", success: true });
-  } catch (err) {
-    console.error("LOGIN ERROR 👉", err);
-    return res.json({ msg: "internal server error", success: false });
+
+    return res.status(200).json({
+      success: true,
+      msg: "Admin logged in successfully",
+
+      admin: {
+        id: existingAdmin._id,
+        email: existingAdmin.email,
+      },
+    });
+  } catch (error) {
+    console.log(error.msg);
+    return res.json({ msg: "Internal server error", success: false });
   }
 };
-
 const logoutUser = async (req, res) => {
   try {
     res.clearCookie("token");
@@ -132,10 +189,47 @@ const getProfile = async (req, res) => {
   }
 };
 
+const isAuth = async(req, res) => {
+  try {
+    const {id} =  req.user;
+    const user =  await User.findById(id).select("-password");
+     res.json({success:true,user});
+  } catch (err) {
+    console.error(err);
+        res.json({ msg: "internal server error", success: false });
+
+  }
+
+}
+
+const isAdmin  = async(req,res)=>{
+  try {
+    const {id} =  req.admin;
+    const admin =  await  User.findById(id).select("-password");
+     res.status(200).json({success:true,admin});
+  }
+  catch(err){
+        res.json({ msg: "internal server error", success: false });
+
+  }
+}
+
+const logoutAdmin = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.json({ msg: "Admin logged out  successfully", success: true });
+  } catch (err) {
+    return res.json({ msg: "internal server error", success: false });
+  }
+};
+
 module.exports = {
   loginUser,
   adminLogin,
   registerUser,
   logoutUser,
   getProfile,
+  isAuth,
+  isAdmin,
+  logoutAdmin,
 };

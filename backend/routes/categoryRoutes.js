@@ -9,7 +9,7 @@ const {
   deleteCategory,
 } = require("../controllers/categoryController.js");
 
-categoryRoutes.post("/add", protect, adminOnly, upload.single("image"), addCategory);
+categoryRoutes.post("/add", adminOnly, upload.single("image"), addCategory);
 categoryRoutes.get("/all", getAllCategories);
 categoryRoutes.put(
   "/update/:id",
@@ -17,6 +17,6 @@ categoryRoutes.put(
   upload.single("image"),
   updateCategory,
 );
-categoryRoutes.put("/delete/:id", adminOnly, deleteCategory);
+categoryRoutes.delete("/delete/:id", adminOnly, deleteCategory);
 
 module.exports = categoryRoutes;

@@ -4,9 +4,10 @@ const cloudinary = require("cloudinary").v2;
 const addMenuItem = async (req, res) => {
   try {
     const { name, price, description, category } = req.body;
+    console.log(name,price,description,category,req.file);
     if (!name || !price || !description || !category || !req.file) {
       return res
-        .status(201)
+        .status(400)
         .json({ msg: "all field are required", success: false });
     }
 
@@ -33,10 +34,10 @@ const addMenuItem = async (req, res) => {
 const getAllMenuItems = async (req, res) => {
   try {
     const menuItems = await Menu.find()
-      .populate("category", "name")
+      .populate("category", "name") 
       .sort({ createdAt: -1 });
 
-    res.status(200).json({ success: true, menuItems });
+    res.status(200).json({ success: true, menuItems});
   } catch (err) {
     console.log(err);
     return res.json({ msg: "internal server error ", success: false });
@@ -47,12 +48,8 @@ const updateMenuItems = async (req, res) => {
   try {
     const { name, price, description, category } = req.body;
     const { id } = req.params;
-    const menuItem = Menu.findById(id);
-    if (!menuItem) {
-      return res
-        .status(404)
-        .json({ msg: "menu item not found", success: false });
-    }
+    const menuItem =await  Menu.findById(id);
+ 
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path);
       menuItem.image = result.secure_url;

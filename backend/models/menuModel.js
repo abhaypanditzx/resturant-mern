@@ -8,7 +8,7 @@ const menuSchema = new mongoose.Schema(
     image: { type: String, required: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "category",
+      ref: "Category",
       required: true,
     },
     isAvailable: { type: Boolean,default:true},
