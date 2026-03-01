@@ -23,6 +23,10 @@ date:{
     type:String,
     required:true,
 },
+  time: {
+      type: String,
+      required: true,
+    },
 note:{
     type:String,
     default:""

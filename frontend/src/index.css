@@ -7,3 +7,8 @@
 *{
   font-family: "Roboto", sans-serif;
 }
+
+
+.bg-heroBanner{
+  background-image: url('./assets/heroBanner.jpg');
+}

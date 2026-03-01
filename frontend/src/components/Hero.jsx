@@ -1,0 +1,37 @@
+import React, { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+const Hero = () => {
+  const { navigate } = useContext(AppContext);
+  return (
+    <section className="relative h-[90vh] w-full flex items-center justify-center bg-center bg-cover bg-heroBanner">
+      {/* overlay */}
+      <div className="absolute inset-0  bg-black/60 "></div>
+      {/* content  */}
+      <div className="px-4 relative z-10 text-center  text-white ">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          Welcome To Our Resturant
+        </h1>
+        <p className="text-lg md:text-xl max-w-2xl mb-8 mx-auto">
+          Experience the taste of perfection - where every bite tells a story.
+        </p>
+        <div 
+        className="flex flex-col sm:flex-row justify-center gap-4">
+          <button
+            onClick={() => navigate("/menu")}
+            className="cursor-pointer bg-orange-500 hover:bg-orange-600 text-black font-semibold px-6 py-3 rounded-full transition-all duration-300"
+          >
+            All Menus
+          </button>
+          <button
+            onClick={() => navigate("/book-table")}
+            className="cursor-pointer bg-transparent border-white border hover:bg-white text-white hover:text-black font-semibold px-6 py-3 rounded-full transition-all duration-300"
+          >
+            Book a Table
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

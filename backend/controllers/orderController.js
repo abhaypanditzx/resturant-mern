@@ -5,6 +5,7 @@ const placeOrder = async (req, res) => {
   try {
     const { id } = req.user;
     const {address} = req.body;
+    console.log(address)
     if (!address) {
       return res
         .status(400)

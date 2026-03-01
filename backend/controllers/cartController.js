@@ -3,9 +3,9 @@ const Menu = require("../models/menuModel.js");
 
 const addToCart = async (req, res) => {
   try {
-    const { menuItemId, quantity } = req.body;
+    const { menuId, quantity } = req.body;
     const { id } = req.user;
-    const menuItem = await Menu.findById(menuItemId);
+    const menuItem = await Menu.findById(menuId);
     if (!menuItem) {
       return res.status(404).json({ msg: "menu item not found" });
     }
@@ -17,12 +17,12 @@ const addToCart = async (req, res) => {
       });
     }
     const existingItem = cart.items.find(
-      (item) => item.menuItem === menuItemId,
+      (item) => item.menuItem.toString() === menuId,
     );
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      cart.items.push({ menuItem: menuItemId, quantity });
+      cart.items.push({ menuItem: menuId, quantity });
     }
     await cart.save();
     res.status(200).json({ msg: "item added to cart", success: true, cart });
@@ -41,7 +41,7 @@ const getCart = async (req, res) => {
     if (!cart) {
       return res.status(200).json({ items: [] });
     }
-    res.status(200).json(cart);
+    res.status(200).json({success:true, cart});
   } catch (err) {
     console.log(err);
     return res.json({ msg: "internal server error ", success: false });

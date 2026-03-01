@@ -95,6 +95,7 @@ const Orders = () => {
                   >
                     <img
                       src={menu?.menuItem?.image}
+                      className="h-16 w-16 object-cover"
                       alt={menu?.menuItem?.name}
                     />
                     <div>

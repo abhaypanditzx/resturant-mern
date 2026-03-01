@@ -1,27 +1,35 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import logo from "../assets/logo.png";
-import { Calendar, LogOut, Menu, Package, ShoppingCart, User, UserCircle } from "lucide-react";
+import {
+  Calendar,
+  LogOut,
+  Menu,
+  Package,
+  ShoppingCart,
+  User,
+  UserCircle,
+
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 const Navbar = () => {
-  const { navigate, user, setUser,api } = useContext(AppContext);
+  const { navigate, user, setUser, api,cartCount } = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
-      const {data} = await api.post("/api/auth/logout")
-      if(data.success){
-        setUser(null)
-        toast.success(data.msg)
-navigate("/")
+      const { data } = await api.post("/api/auth/logout");
+      if (data.success) {
+        setUser(null);
+        toast.success(data.msg);
+        navigate("/");
       }
     } catch (error) {
-     console.error(error) 
+      console.error(error);
     }
-  }
-  console.log(user)
+  };
 
   return (
     <nav className="py-3 bg-cyan-50 w-full flex justify-around items-center shadow-md sticky top-0 z-50">
@@ -62,11 +70,11 @@ navigate("/")
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate("/cart")}
-              className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
             >
               <ShoppingCart size={22} className="text-gray-700" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-base rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                5
+                {cartCount}
               </span>
             </button>
             <div className="hidden md:block">
@@ -99,7 +107,10 @@ navigate("/")
                         <Package size={18} className="mr-3" />
                         My Orders
                       </Link>
-                      <button onClick={()=>handleLogout()} className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
+                      <button
+                        onClick={() => handleLogout()}
+                        className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2"
+                      >
                         <LogOut size={18} className="mr-3" />
                         Logout
                       </button>
@@ -121,30 +132,30 @@ navigate("/")
           </button> */}
         </div>
         {/* for small screen devices */}
-        { isMenuOpen&&(
+        {isMenuOpen && (
           <div className="md:hidden border-t border-b-gray-200 py-4">
             <div className="flex flex-col space-y-3">
-                          <Link
-              to={"/"}
-              className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
-            >
-              Home
-            </Link>
+              <Link
+                to={"/"}
+                className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
+              >
+                Home
+              </Link>
 
-            <Link
-              to={"/menu"}
-              className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
-            >
-              Menus
-            </Link>
+              <Link
+                to={"/menu"}
+                className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
+              >
+                Menus
+              </Link>
 
-            <Link
-              to={"/contact"}
-              className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
-            >
-              Contact
-            </Link>
-                 {user ? (
+              <Link
+                to={"/contact"}
+                className="text-gray-700 hover:text-blue-600 transition-colors  font-medium"
+              >
+                Contact
+              </Link>
+              {user ? (
                 <div className="relative ">
                   <button
                     className="p-2 hover:bg-gray-100  rounded-lg transition-colors"
@@ -166,7 +177,10 @@ navigate("/")
                         <Package size={18} className="mr-3" />
                         My Orders
                       </Link>
-                      <button  onClick ={()=>handleLogout()} className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2">
+                      <button
+                        onClick={() => handleLogout()}
+                        className=" text-red-600 flex items-center px-4 w-full hover:bg-red-50 transition-colors py-2"
+                      >
                         <LogOut size={18} className="mr-3" />
                       </button>
                     </div>
@@ -181,12 +195,8 @@ navigate("/")
                 </button>
               )}
             </div>
-            
-            </div>
-        )
-
-        }
-
+          </div>
+        )}
       </div>
     </nav>
   );

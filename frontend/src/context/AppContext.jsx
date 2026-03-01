@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import Profile from "../pages/Profile";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import api from "../utils/axios";
@@ -13,8 +13,50 @@ const AppContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
   const [categories, setCategories] = useState([]);
   const [menus, setMenus] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
+  const fetchCart = async () => {
+    try {
+      const { data } = await api.get("/api/cart/get");
+      console.log(data.cart);
+      if (data.success) {
+        setCart(data.cart);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (cart?.items) {
+      const total = cart.items.reduce(
+        (sum, item) => sum + item.menuItem.price * item.quantity,
+        0,
+      );
+      setTotalPrice(total);
+      console.log(total);
+    }
+  }, [cart]);
+  const cartCount = cart?.items?.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
+
+  const addToCart = async (menuId) => {
+    try {
+      const { data } = await api.post("/api/cart/add", { menuId, quantity: 1 });
+      if (data.success) {
+        toast.success(data.msg);
+        fetchCart();
+      } else {
+        toast.error(data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong!");
+    }
+  };
   const getUser = async () => {
     try {
       const { data } = await api.get("/api/auth/isAuth");
@@ -55,12 +97,28 @@ const AppContextProvider = ({ children }) => {
     }
   };
 
+  const adminPath = useLocation().pathname.includes("/admin");
+  
+  // user&admin data auth 
   useEffect(() => {
-    getAdmin();
-    getUser();
-    fetchCategories();
-    fetchMenus();
-  }, []);
+    if(adminPath){
+      getAdmin()
+    }else{
+      getUser()
+    }
+  }, [adminPath]);
+
+  useEffect(() => {
+    if(user){
+      fetchCart();
+    }
+  },[user])
+
+  useEffect(() => {
+  fetchCategories();
+  fetchMenus();
+}, []);
+
 
   const value = {
     navigate,
@@ -75,6 +133,11 @@ const AppContextProvider = ({ children }) => {
     fetchCategories,
     menus,
     fetchMenus,
+    addToCart,
+    cart,
+    cartCount,
+    fetchCart,
+    totalPrice,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
