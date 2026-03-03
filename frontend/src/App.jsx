@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import { AppContext } from "./context/AppContext";
-import MyBookings from "./pages/Mybookings.jsx";
+import MyBookings from "./pages/MyBookings.jsx";
 import MenuDetails from "./pages/MenuDetails.jsx";
 import Cart from "./pages/Cart.jsx";
 import Login from "./pages/Login.jsx";
@@ -27,7 +27,7 @@ import Orders from "./pages/admin/Orders.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx"
 
 const App = () => {
-  const { navigate ,admin} = useContext(AppContext);
+  const {admin} = useContext(AppContext);
   const adminPath = useLocation().pathname.includes("admin");
   return (
     <>
