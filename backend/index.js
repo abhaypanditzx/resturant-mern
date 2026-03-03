@@ -17,10 +17,12 @@ connectCloudinary();
 
 //middlewares
 app.use(express.json());
-app.use(cors({
-  origin:"https://resturant-mern-frontend.vercel.app/",
-  credentials:true
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
