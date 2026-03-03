@@ -18,11 +18,14 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post("/api/auth/login", formData);
-      toast.success(res.data.msg);
-      navigate("/");
-      setUser({ email: res.data.email, name: res.data.name });
-      console.log("response from server:", res.data.user);
+      const {data} = await api.post("/api/auth/login", formData);
+      if(data.success){
+        toast.success(data.msg);
+        setUser({ email: data?.email, name: data?.name });
+        navigate("/");
+      }else{
+        toast.error(data.msg);
+      }
     } catch (err) {
       const message = err.response?.data?.msg || "Login failed. Try again.";
       toast.error(message);
