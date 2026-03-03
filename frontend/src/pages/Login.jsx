@@ -68,14 +68,14 @@ const Login = () => {
           />
 
           {!isPasswordVisible ? (
-            <Eye
+            <EyeClosed
               height={16}
               width={20}
               className="text-[#6B7280] absolute right-2 cursor-pointer hover:text-gray-400 transition-colors"
               onClick={() => setIsPasswordVisible(true)}
             />
           ) : (
-            <EyeClosed
+            <Eye
               height={16}
               width={20}
               className="text-[#6B7280]  absolute right-2 cursor-pointer  hover:text-gray-400 transition-colors"
