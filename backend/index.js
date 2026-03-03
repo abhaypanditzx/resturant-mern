@@ -19,8 +19,8 @@ connectCloudinary();
 app.use(express.json());
 app.use(
   cors({
-    origin: "*",
-    credentials: true,
+    origin:"https://resturant-app-pi.vercel.app/",
+    credentials:true,
   }),
 );
 app.use(cookieParser());
