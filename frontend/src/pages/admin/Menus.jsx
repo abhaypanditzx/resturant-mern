@@ -1,64 +1,57 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../../context/AppContext'
-import {CircleX} from "lucide-react"
-import {toast}  from "react-hot-toast"
+import React, { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
+import { CircleX } from "lucide-react";
+import { toast } from "react-hot-toast";
 const Menus = () => {
-  const {fetchmenuItems,menus,api} = useContext(AppContext)
-const deleteMenuItem =async(id)=>{
-  try {
-    const {data} = await api.delete(`/api/menu/delete/${id}`);
-    if(data.success){
-      toast.success(data.msg)
-      fetchmenuItems()
+  const { fetchmenuItems, menus, api } = useContext(AppContext);
+  const deleteMenuItem = async (id) => {
+    try {
+      const { data } = await api.delete(`/api/menu/delete/${id}`);
+      if (data.success) {
+        toast.success(data.msg);
+        fetchmenuItems();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
-    
-  } catch (error) {
-    toast.error(error.response.data.message)
-    
-  }
+  };
 
-}
-  
   return (
-
-    <div className='py-4 px-3'>
-<h1 className='text-3xl font-bold mb-3'>All menuItem</h1>
-<div className="border border-gray-400 max-w-5xl mx-auto p-3">
- <div className="grid grid-cols-5 font-semibold  text-gray-700">
-  <div>Image</div>
-  <div>Name</div>
-  <div>Category</div>
-  <div>price</div>
-  <div>Action</div>
- </div>
- <hr className='w-full  my-4 text-gray-200' />
- <ul>
-  {
-    menus.map((item)=> (
-      <div key={item._id}>
-        <div className="grid grid-cols-5  items-center mb-4">
-          <div className="flex items-center  gap-2 max-w-md">
-            <img src={item.image} alt="" className='w-20 h-20' />
-          </div>
-          <p>{item?.name}</p>
-          <p className=''>{item?.category?.name}</p>
-          <p>{item?.price}</p>
-          <p 
-          className="text-red-600 cursor-pointer hover:underline" 
-          onClick={()=>deleteMenuItem(item._id)}>
-            <CircleX/>
-            </p>
-
+    <div className="py-4 px-3">
+      <h1 className="text-3xl font-bold mb-3">All menuItem</h1>
+      <div className="border border-gray-400 max-w-5xl mx-auto p-3">
+        <div className="grid grid-cols-5 font-semibold  text-gray-700">
+          <div>Image</div>
+          <div>Name</div>
+          <div>Category</div>
+          <div>price</div>
+          <div>Action</div>
         </div>
-        <hr className="w-full text-gray-300" />
+        <hr className="w-full  my-4 text-gray-200" />
+        <ul>
+          {menus.map((item) => (
+            <div key={item._id}>
+              <div className="grid grid-cols-5  items-center mb-4">
+                <div className="flex items-center  gap-2 max-w-md">
+                  <img src={item.image} alt="" className="w-20 h-20" />
+                </div>
+                <p>{item?.name}</p>
+                <p className="">{item?.category?.name}</p>
+                <p>{item?.price}</p>
+                <p
+                  className="text-red-600 cursor-pointer hover:underline"
+                  onClick={() => deleteMenuItem(item._id)}
+                >
+                  <CircleX />
+                </p>
+              </div>
+              <hr className="w-full text-gray-300" />
+            </div>
+          ))}
+        </ul>
       </div>
-    ))
-  }
- </ul>
-</div>
- 
     </div>
-  )
-}
+  );
+};
 
 export default Menus;

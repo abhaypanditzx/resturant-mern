@@ -7,8 +7,8 @@ const AdminLogin = () => {
     useContext(AppContext);
 
   const [formData, setformData] = useState({
-    email: "admin@gmail.com",
-    password: "admin123",
+    email: "",
+    password: "",
   });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const handleChange = (e) => {
@@ -21,7 +21,6 @@ const AdminLogin = () => {
       const { data } = await api.post("/api/auth/admin/login", formData);
       if (data.success) {
         setAdmin(true);
-        console.log(data)
         toast.success(data.msg);
         navigate("/admin");
       }

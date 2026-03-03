@@ -18,12 +18,13 @@ const Orders = () => {
   };
 
   const handleStatusChange = async (orderId, newStatus) => {
-
     try {
-      const { data } = await api.put(`/api/order/update-status/${orderId}`, {status:newStatus});
+      const { data } = await api.put(`/api/order/update-status/${orderId}`, {
+        status: newStatus,
+      });
       if (data.success) {
-       toast.success(data.msg);
-       fetchOrders()
+        toast.success(data.msg);
+        fetchOrders();
       } else {
         console.log(data.msg);
       }

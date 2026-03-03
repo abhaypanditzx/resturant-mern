@@ -9,7 +9,7 @@ const Bookings = () => {
   const fetchBookings = async () => {
     try {
       const { data } = await api.get("/api/booking/bookings");
-      if(data.success){
+      if (data.success) {
         console.log(data);
         setBookings(data.bookings);
       }
@@ -62,7 +62,10 @@ const Bookings = () => {
 
         <ul className="space-y-4 py-2">
           {bookings.map((item) => (
-            <li key={item._id} className="border border-gray-700  rounded-lg p-3 md-2">
+            <li
+              key={item._id}
+              className="border border-gray-700  rounded-lg p-3 md-2"
+            >
               <div className="flex flex-col md:grid md:grid-cols-6  md:items-center gap-2 md:gap-0">
                 <p className="font-medium text-center md:text-left">
                   {item.name}
@@ -99,7 +102,6 @@ const Bookings = () => {
                   </select>
                 </div>
               </div>
-            
             </li>
           ))}
         </ul>
