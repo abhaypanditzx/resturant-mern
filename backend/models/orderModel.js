@@ -33,9 +33,9 @@ const orderSchema = new mongoose.Schema(
       enum: ["Pending", "Preparing", "Delivered"],
       default: "Pending",
     },
-    patymentMethod: {
+    paymentMethod: {
       type: String,
-      default: "cash on delivery",
+      default:"cash on delivery"
     },
   },
   { timestamps: true },

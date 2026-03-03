@@ -74,7 +74,7 @@ const Navbar = () => {
             >
               <ShoppingCart size={22} className="text-gray-700" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-base rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                {cartCount}
+                {cartCount>0? cartCount : 0}
               </span>
             </button>
             <div className="hidden md:block">
@@ -98,7 +98,7 @@ const Navbar = () => {
                         className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       >
                         <Calendar size={18} className="mr-3" />
-                        My Orders
+                      My Bookings
                       </Link>
                       <Link
                         to={"/my-orders"}

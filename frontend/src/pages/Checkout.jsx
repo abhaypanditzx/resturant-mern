@@ -4,16 +4,17 @@ import toast from "react-hot-toast";
 const CheckOut = () => {
   const { api, navigate, totalPrice } = useContext(AppContext);
   const [address, setAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
+  const [paymentMethod, setPaymentMethod] = useState("cash on delivery");
   console.log(paymentMethod);
 
   const handleCheckout = async ()=>{
     if(!address){
       toast.error("please enter address")
+      return;
     }
     try {
       
-      const {data} = await api.post("/api/order/place",{address})
+      const {data} = await api.post("/api/order/place",{address,paymentMethod})
       if(data.success){
         toast.success(data.msg)
       }else{
@@ -26,8 +27,11 @@ const CheckOut = () => {
   }
 
   return (
-    <div className="max-2-5xl bg-white mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 p-6 shadow-lg rounded-2xl ">
-      <div>
+    <div className="max-w-5xl bg-white mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 p-6 shadow-lg rounded-2xl ">
+      {/* left side order summary  */}
+
+   <div>
+       <div>
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">
           Delivery Address
         </h2>
@@ -44,19 +48,22 @@ const CheckOut = () => {
       <div className="flex flex-col border border-gray-200 rounded-lg p-4 mb-4 ">
         <p className="flex justify-between text-lg font-medium text-gray-700 ">
           <span className="">Total Amount:</span>
-          <span className="text-green-600 font-semibold">$. {totalPrice}|</span>
+          <span className="text-green-600 font-semibold">$. {totalPrice}</span>
         </p>
       </div>
+   </div>
+
+
+      <div className="py-12 ">
         <h3 className="text-lg font-medium mb-2 text-gray-800">payment Method</h3>
-      <div className="py-3">
         <label htmlFor="" className="flex items-center space-x-3">
           <input
             type="radio"
             name="payment"
-            checked={paymentMethod === "cashOnDelivery"}
+            checked={paymentMethod === "cash on delivery"}
             onChange={(e) => setPaymentMethod(e.target.value)}
             className="text-green-600 focus:ring-green-500"
-            value="cashOnDelivery"
+            value="cash on delivery"
           />
           <span>Cash on Delivery</span>
         </label>
@@ -65,10 +72,10 @@ const CheckOut = () => {
           <input
             type="radio"
             name="payment"
-            checked={paymentMethod === "onlinePayment"}
+            checked={paymentMethod === "online payment"}
             onChange={(e) => setPaymentMethod(e.target.value)}
             className="text-green-600 focus:ring-green-500"
-            value="onlinePayment"
+            value="online payment"
           />
           <span>Online Payment</span>
         </label>

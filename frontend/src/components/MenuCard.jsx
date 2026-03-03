@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import {ShoppingCartIcon} from "lucide-react"
 const MenuCard = ({ menu }) => {
   const { navigate ,addToCart} = useContext(AppContext);
-
+console.log(menu._id)
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden  transition-all duration-300 group">
       {/* image section */}

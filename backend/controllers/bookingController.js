@@ -42,7 +42,7 @@ const getUserBookings = async (req, res) => {
   try {
     const { id } = req.user;
     const bookings = await Booking.find({ user: id }).sort({ createdAt: -1 });
-    res.status(200).json(bookings);
+    res.status(200).json({success:true, bookings});
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: "internal server error" });
@@ -61,12 +61,12 @@ const getAllBookings = async (req, res) => {
 
 const updateBookings = async (req, res) => {
   try {
-    console.log("update status route hit");
     const { bookingId } = req.params;
+    console.log("booking id:", bookingId);
     const { status } = req.body;
     const booking = await Booking.findById(bookingId);
     if (!booking) {
-      return (res.status(404), json({ msg: "booking not found" }));
+      return (res.status(404), json({ msg: "booking not found",success:false }));
     }
     booking.status = status;
     await booking.save();
@@ -79,9 +79,20 @@ const updateBookings = async (req, res) => {
   }
 };
 
+const deleteBooking = async (req, res)  =>{
+  try {
+    const {bookingId} = req.params;
+    const booking = await Booking.findByIdAndDelete(bookingId);
+    res.status(200).json({msg:"Booking Deleted",success:true,booking})
+  } catch (error) {
+       res.status(500).json({ msg: "Internal server error" });
+
+  }
+}
 module.exports = {
   updateBookings,
   createBooking,
   getAllBookings,
   getUserBookings,
+  deleteBooking
 };

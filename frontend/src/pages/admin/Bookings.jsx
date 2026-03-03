@@ -25,10 +25,10 @@ const Bookings = () => {
         { status: newStatus },
       );
       if (data.success) {
-        toast.success(data.bookings.status);
         fetchBookings();
+        toast.success(data.msg);
       } else {
-        console.log(data.bookings.msg);
+        console.log(data.msg);
       }
     } catch (error) {
       console.log(error);

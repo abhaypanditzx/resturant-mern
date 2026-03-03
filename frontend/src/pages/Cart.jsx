@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/AppContext";
-
+import { Minus, Plus } from "lucide-react";
 const Cart = () => {
-  const { cart,totalPrice,navigate } = useContext(AppContext);
-  
+  const { cart, totalPrice, navigate, addToCart, removeFromCart } =
+    useContext(AppContext);
+
   if (!cart || !cart.items || !cart.items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center  h-64">
@@ -25,28 +26,53 @@ const Cart = () => {
           </thead>
           <tbody>
             {cart.items.map((item) => (
-              <tr key={item._id} className="border-t border-gray-200 hover:bg-gray-50">
+              <tr
+                key={item._id}
+                className="border-t border-gray-200 hover:bg-gray-50"
+              >
                 <td className="py-3 px-4 items-center space-x-3">
-                  <img src={item.menuItem.image} alt={item.menuItem.name} className="h-12 w-12 border border-gray-400  rounded-full object-cover overflow-hidden"/>
+                  <div className="flex flex-col justify-center items-center  w-fit   ">
+                    <img
+                      src={item.menuItem.image}
+                      alt={item.menuItem.name}
+                      className="h-12 w-12 border border-gray-400  rounded-full object-cover overflow-hidden"
+                    />
+                    {/* add items and remove from cart  */}
+                    <div className="flex  w-fit shadow-gray-350 rounded-lg shadow-md  mt-2 px-4 py-2  items-center ">
+                      <button onClick={() => removeFromCart(item.menuItem._id)}>
+                        <Minus
+                          className={`h-5 w-5 ${item.quantity === 0 ? "text-gray-400" : "text-gray-600"} cursor-pointer hover:gray-700`}
+                        />
+                      </button>
+                      <span className="text-sm text-gray-400">(Qty)</span>
+                      <button onClick={() => addToCart(item.menuItem._id)}>
+                        <Plus className="h-5 w-5 cursor-pointer hover:gray-700 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
                 </td>
-                <td className="py-3 px-4 items-center space-x-3">{item.quantity}</td>
-                <td className="py-3 px-4 items-center space-x-3">${item.menuItem.price}</td>
+                <td className="py-3 px-4 items-center space-x-3">
+                  {item.quantity}
+                </td>
+                <td className="py-3 px-4 items-center space-x-3">
+                  ${item.menuItem.price}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="flex mt-6 items-center justify-between">
-      <h3 className="font-semibold text-xl ">
-        Total: <span className="text-green-600">${totalPrice}</span>
-      </h3>
-      <button 
-      onClick={()=>navigate("/checkout")}
-      className="py-2 px-6 bg-green-600 hover:bg-green-700 transition-colors cursor-pointer rounded-lg   text-white font-bold">
-        Checkout
-      </button>
+          <h3 className="font-semibold text-xl ">
+            Total: <span className="text-green-600">${totalPrice}</span>
+          </h3>
+          <button
+            onClick={() => navigate("/checkout")}
+            className="py-2 px-6 bg-green-600 hover:bg-green-700 transition-colors cursor-pointer rounded-lg   text-white font-bold"
+          >
+            Checkout
+          </button>
         </div>
       </div>
-  
     </div>
   );
 };

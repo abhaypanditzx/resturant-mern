@@ -38,10 +38,7 @@ const AppContextProvider = ({ children }) => {
       console.log(total);
     }
   }, [cart]);
-  const cartCount = cart?.items?.reduce(
-    (acc, item) => acc + item.quantity,
-    0
-  );
+  const cartCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0);
 
   const addToCart = async (menuId) => {
     try {
@@ -55,6 +52,20 @@ const AppContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       toast.error("something went wrong!");
+    }
+  };
+  const removeFromCart = async (menuId) => {
+    console.log(menuId)
+    try {
+      const { data } = await api.delete("/api/cart/remove",{data:{menuId}});
+      if (data.success) {
+        toast.success(data.msg);
+        fetchCart()
+      } else {
+        toast.error(data.msg);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   const getUser = async () => {
@@ -98,27 +109,26 @@ const AppContextProvider = ({ children }) => {
   };
 
   const adminPath = useLocation().pathname.includes("/admin");
-  
-  // user&admin data auth 
+
+  // user&admin data auth
   useEffect(() => {
-    if(adminPath){
-      getAdmin()
-    }else{
-      getUser()
+    if (adminPath) {
+      getAdmin();
+    } else {
+      getUser();
     }
   }, [adminPath]);
 
   useEffect(() => {
-    if(user){
+    if (user) {
       fetchCart();
     }
-  },[user])
+  }, [user]);
 
   useEffect(() => {
-  fetchCategories();
-  fetchMenus();
-}, []);
-
+    fetchCategories();
+    fetchMenus();
+  }, []);
 
   const value = {
     navigate,
@@ -138,6 +148,7 @@ const AppContextProvider = ({ children }) => {
     cartCount,
     fetchCart,
     totalPrice,
+    removeFromCart,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
