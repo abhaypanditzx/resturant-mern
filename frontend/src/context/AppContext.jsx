@@ -1,7 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import Profile from "../pages/Profile";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import api from "../utils/axios";
 import toast from "react-hot-toast";
@@ -16,7 +14,6 @@ const AppContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-
   const fetchCart = async () => {
     try {
       const { data } = await api.get("/api/cart/get");
@@ -55,12 +52,14 @@ const AppContextProvider = ({ children }) => {
     }
   };
   const removeFromCart = async (menuId) => {
-    console.log(menuId)
+    console.log(menuId);
     try {
-      const { data } = await api.delete("/api/cart/remove",{data:{menuId}});
+      const { data } = await api.delete("/api/cart/remove", {
+        data: { menuId },
+      });
       if (data.success) {
         toast.success(data.msg);
-        fetchCart()
+        fetchCart();
       } else {
         toast.error(data.msg);
       }

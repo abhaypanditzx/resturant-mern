@@ -7,7 +7,6 @@ const MyBookings = () => {
   const fetchMyBookings = async () => {
     try {
       const { data } = await api.get("/api/booking/my-bookings");
-      console.log(data);
       if (data.success) {
         setMyBookings(data.bookings);
       }
@@ -15,7 +14,6 @@ const MyBookings = () => {
       console.log(error);
     }
   };
-  console.log(myBookings);
   useEffect(() => {
     fetchMyBookings();
   }, []);

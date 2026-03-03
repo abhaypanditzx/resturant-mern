@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 const CheckOut = () => {
-  const { api, navigate, totalPrice } = useContext(AppContext);
+  const { api, totalPrice } = useContext(AppContext);
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cash on delivery");
   console.log(paymentMethod);
@@ -48,7 +48,7 @@ const CheckOut = () => {
       <div className="flex flex-col border border-gray-200 rounded-lg p-4 mb-4 ">
         <p className="flex justify-between text-lg font-medium text-gray-700 ">
           <span className="">Total Amount:</span>
-          <span className="text-green-600 font-semibold">$. {totalPrice}</span>
+          <span className="text-green-600 font-semibold">${totalPrice}</span>
         </p>
       </div>
    </div>

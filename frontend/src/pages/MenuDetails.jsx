@@ -5,14 +5,10 @@ import { ChevronLeft } from "lucide-react"
 const MenuDetails = () => {
   const {id} =  useParams();
   console.log(id)
-  const {menus,navigate,addToCart} = useContext(AppContext)
+  const {menus,navigate,addToCart,CurrentItemPrice, setCurrentItemPrice} = useContext(AppContext)
 
     const menu = menus.find((menu)=> menu._id === id)
-    console.log("menu :", menu)
-  
-  console.log(menu)
-
-
+    setCurrentItemPrice(menu.price)
     return  menu ? (
         <div className="max-w-6xl w-full px-6">
             <p>
@@ -55,7 +51,7 @@ m
                          className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition" >
                             Add to Cart
                         </button>
-                        <button className="w-full py-3.5 cursor-pointer font-medium bg-orange-500 text-white hover:bg-orange-600 transition" >
+                        <button onClick={()=>navigate("/checkout")} className="w-full py-3.5 cursor-pointer font-medium bg-orange-500 text-white hover:bg-orange-600 transition" >
                             Buy now
                         </button>
                     </div>
