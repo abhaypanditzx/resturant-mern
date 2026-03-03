@@ -81,41 +81,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// const adminLogin = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-
-//     if (!password || !email) {
-//       return res.json({ msg: "please fill all the fields", success: false });
-//     }
-//     console.log(`email:${email} password:${password}`);
-
-//     const adminEmail = process.env.ADMIN_EMAIL;
-//     const adminPassword = process.env.ADMIN_PASSWORD;
-
-//     if (email !== adminEmail || password !== adminPassword) {
-//       return res.json({ msg: "invalid credentials", success: false });
-//     }
-//     const token = jwt.sign({ 
-//       role:"admin",
-//       email }, process.env.SECRET_KEY, {
-//       expiresIn: "1d",
-//     });
-//     res.cookie("token", token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: "strict",
-//       maxAge: 24 * 60 * 60 * 1000,
-//     });
-//     res.json({admin:{admin:adminEmail}, msg: "admin logged in successfully", success: true});
-//     console.log("logged in success");
-//   } catch (err) {
-//     console.error("LOGIN ERROR 👉", err);
-//     return res.json({ msg: "internal server error", success: false });
-//   }
-// };
-
-
  const adminLogin = async (req, res) => {
   try {
     console.log("admin login route hit ");
