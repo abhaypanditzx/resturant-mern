@@ -18,7 +18,7 @@ connectCloudinary();
 //middlewares
 app.use(express.json());
 app.use(cors({
-  origin:"https://resturant-mern-sigma.vercel.app/",
+  origin:"https://resturant-mern-frontend.vercel.app/",
   credentials:true
 }));
 app.use(cookieParser());
