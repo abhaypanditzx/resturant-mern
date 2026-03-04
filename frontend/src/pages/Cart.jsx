@@ -25,7 +25,7 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.items.map((item) => (
+            {cart?.items?.map((item) => (
               <tr
                 key={item._id}
                 className="border-t border-gray-200 hover:bg-gray-50"
