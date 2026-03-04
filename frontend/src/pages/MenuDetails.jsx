@@ -4,7 +4,6 @@ import {AppContext} from "../context/AppContext"
 import { ChevronLeft } from "lucide-react"
 const MenuDetails = () => {
   const {id} =  useParams();
-  console.log(id)
   const {menus,navigate,addToCart} = useContext(AppContext)
 
     const menu = menus.find((menu)=> menu._id === id)

@@ -9,8 +9,6 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const { data } = await api.get("/api/order/orders");
-      console.log(data);
-
       setOrders(data);
     } catch (error) {
       console.log(error);
@@ -34,7 +32,6 @@ const Orders = () => {
   };
   useEffect(() => {
     if (admin.isAdmin) {
-      console.log("is admin: ", admin.isAdmin);
       fetchOrders();
     }
   }, []);

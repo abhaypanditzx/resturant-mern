@@ -29,13 +29,12 @@ const Signup = () => {
         toast.error(res.data.msg);
       }
       toast.success(res.data.msg);
-      console.log(res);
     } catch (err) {
       console.log(err);
       toast.error("login failed");
     }
   };
-  console.log(formData);
+  
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <form

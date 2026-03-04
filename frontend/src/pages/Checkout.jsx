@@ -5,7 +5,6 @@ const CheckOut = () => {
   const { api, totalPrice } = useContext(AppContext);
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cash on delivery");
-  console.log(paymentMethod);
 
   const handleCheckout = async ()=>{
     if(!address){

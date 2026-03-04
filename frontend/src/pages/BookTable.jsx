@@ -20,7 +20,6 @@ const BookTable = () => {
       [e.target.name]: e.target.value,
     });
   };
-  console.log(formData);
   const handleSubmit = async (e) => {
   e.preventDefault()
     try {

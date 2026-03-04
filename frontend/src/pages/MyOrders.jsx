@@ -7,7 +7,6 @@ const MyOrders = () => {
     try {
       const { data } = await api.get("/api/order/my-orders");
       if (data.success) {
-        console.log(data);
         setMyOrders(data.orders);
       } else {
         console.log("unable to fetch orders data");

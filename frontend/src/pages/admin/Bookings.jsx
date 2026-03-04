@@ -10,7 +10,6 @@ const Bookings = () => {
     try {
       const { data } = await api.get("/api/booking/bookings");
       if (data.success) {
-        console.log(data);
         setBookings(data.bookings);
       }
     } catch (error) {
@@ -38,7 +37,6 @@ const Bookings = () => {
   };
   useEffect(() => {
     if (admin.isAdmin) {
-      console.log("is admin: ", admin.isAdmin);
       fetchBookings();
     }
   }, []);

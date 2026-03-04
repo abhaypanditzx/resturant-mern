@@ -14,7 +14,6 @@ const AddMenu = () => {
     image: null,
   });
   
-  console.log(formData)
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 

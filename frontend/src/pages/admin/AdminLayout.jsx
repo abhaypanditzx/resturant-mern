@@ -69,7 +69,6 @@ const isActive = (path, exact = false) => {
     try {
       const {data} = await api.post("/api/auth/admin/logout");
       if(data.success)
-        console.log(data.msg);
       toast.success(data.msg);
       navigate("/")
 
