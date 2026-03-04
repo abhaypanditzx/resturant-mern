@@ -3,7 +3,6 @@ import { AppContext } from "../context/AppContext";
 
 const Categories = () => {
   const { api, navigate, categories } = useContext(AppContext);
-  console.log(categories)
 
   return (
     <section className=" py-16 from-gray-50 to-white ">
