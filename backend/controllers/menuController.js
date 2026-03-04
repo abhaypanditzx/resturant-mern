@@ -11,7 +11,16 @@ const addMenuItem = async (req, res) => {
         .json({ msg: "all field are required", success: false });
     }
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+  const result = await new Promise((resolve, reject) => {
+  const stream = cloudinary.uploader.upload_stream(
+    { resource_type: "image" },
+    (error, result) => {
+      if (error) reject(error);
+      else resolve(result);
+    }
+  );
+  stream.end(req.file.buffer);
+});
     const menuItem = await Menu.create({
       name: name,
       description: description,
