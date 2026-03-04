@@ -5,10 +5,9 @@ import { ChevronLeft } from "lucide-react"
 const MenuDetails = () => {
   const {id} =  useParams();
   console.log(id)
-  const {menus,navigate,addToCart,CurrentItemPrice, setCurrentItemPrice} = useContext(AppContext)
+  const {menus,navigate,addToCart} = useContext(AppContext)
 
     const menu = menus.find((menu)=> menu._id === id)
-    setCurrentItemPrice(menu.price)
     return  menu ? (
         <div className="max-w-6xl w-full px-6">
             <p>
