@@ -17,7 +17,16 @@ const addCategory = async (req, res) => {
         .json({ msg: "category already exists", success: false });
     }
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await new Promise((resolve, reject) => {
+  const stream = cloudinary.uploader.upload_stream(
+    { resource_type: "image" },
+    (error, result) => {
+      if (error) reject(error);
+      else resolve(result);
+    }
+  );
+  stream.end(req.file.buffer);
+});
     const newCategory = await Category.create({
       name,
       image: result.secure_url,
