@@ -33,7 +33,6 @@ const AppContextProvider = ({ children }) => {
         0,
       );
       setTotalPrice(total);
-      console.log(total);
     }
   }, [cart]);
   const cartCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0);
@@ -53,7 +52,6 @@ const AppContextProvider = ({ children }) => {
     }
   };
   const removeFromCart = async (menuId) => {
-    console.log(menuId);
     try {
       const { data } = await api.delete("/api/cart/remove", {
         data: { menuId },
@@ -77,7 +75,7 @@ const AppContextProvider = ({ children }) => {
     } catch (error) {
       setUser(null);
       console.log(error);
-    }finally{
+    } finally {
       setAuthLoading(false)
     }
   };
