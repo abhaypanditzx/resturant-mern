@@ -14,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 const Navbar = () => {
-  const { navigate, user, setUser, api,cartCount } = useContext(AppContext);
+  const { navigate, user, setUser, api,cartCount,authLoading } = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -78,7 +78,7 @@ const Navbar = () => {
               </span>
             </button>
             <div className="hidden md:block">
-              {user ? (
+              {authLoading? null :  user ? (
                 <div className="relative ">
                   <button
                     className="p-2 hover:bg-gray-100  rounded-lg transition-colors"

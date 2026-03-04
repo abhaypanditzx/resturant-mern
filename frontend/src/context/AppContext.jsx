@@ -7,6 +7,7 @@ export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [admin, setAdmin] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -74,7 +75,10 @@ const AppContextProvider = ({ children }) => {
         setUser(data.user);
       }
     } catch (error) {
+      setUser(null);
       console.log(error);
+    }finally{
+      setAuthLoading(false)
     }
   };
   const getAdmin = async () => {
@@ -148,6 +152,7 @@ const AppContextProvider = ({ children }) => {
     fetchCart,
     totalPrice,
     removeFromCart,
+    setAuthLoading
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
