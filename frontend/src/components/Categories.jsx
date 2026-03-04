@@ -12,15 +12,15 @@ const Categories = () => {
           Explore Our <span className="text-yellow-500">Categories</span>
         </h2>{" "}
         <p>Discover delicious dishes from our carefully created categories</p>
-        <div className="grid grid-cols-2 py-3te sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 py-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {categories.map((item) => (
-            <div key={item._id} onClick={()=>navigate("/")} className="cursor-pointer group">
+            <div key={item._id} onClick={() => navigate("/")} className="cursor-pointer group">
               <div className="relative">
                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl">
-                    <img src={item.image} alt={item.name}
+                  <img src={item.image} alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <div className="absolute inset-0 w-32 h-32 mx-auto bg-linear-to-t rounded-full  from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"> </div>
+                </div>
+                <div className="absolute inset-0 w-32 h-32 mx-auto bg-linear-to-t rounded-full  from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"> </div>
               </div>
               <div className="mt-4">
                 <h3 className="text-2xl font-semibold text-gray-800 group-hover:text-yellow-500 transition-colors duration-300">{item.name}</h3>
