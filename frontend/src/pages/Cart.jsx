@@ -33,26 +33,26 @@ const Cart = () => {
                 <td className="py-3 px-4 items-center space-x-3">
                   <div className="flex flex-col justify-center items-center  w-fit   ">
                     <img
-                      src={item.menuItem.image}
-                      alt={item.menuItem.name}
+                      src={item?.menuItem?.image}
+                      alt={item?.menuItem?.name}
                       className="h-12 w-12 border border-gray-400  rounded-full object-cover overflow-hidden"
                     />
                     {/* add items and remove from cart  */}
                     <div className="flex  w-fit shadow-gray-350 rounded-lg shadow-md  mt-2 px-4 py-2  items-center ">
-                      <button onClick={() => removeFromCart(item.menuItem._id)}>
+                      <button onClick={() => removeFromCart(item?.menuItem?._id)}>
                         <Minus
                           className={`h-5 w-5 ${item.quantity === 0 ? "text-gray-400" : "text-gray-600"} cursor-pointer hover:gray-700`}
                         />
                       </button>
                       <span className="text-sm text-gray-400">(Qty)</span>
-                      <button onClick={() => addToCart(item.menuItem._id)}>
+                      <button onClick={() => addToCart(item?.menuItem?._id)}>
                         <Plus className="h-5 w-5 cursor-pointer hover:gray-700 text-gray-600" />
                       </button>
                     </div>
                   </div>
                 </td>
                 <td className="py-3 px-4 items-center space-x-3">
-                  {item.quantity}
+                  {item?.quantity}
                 </td>
                 <td className="py-3 px-4 items-center space-x-3">
                   ${item.menuItem.price}
@@ -63,7 +63,7 @@ const Cart = () => {
         </table>
         <div className="flex mt-6 items-center justify-between">
           <h3 className="font-semibold text-xl ">
-            Total: <span className="text-green-600">₹{totalPrice}</span>
+            Total: <span className="text-green-600">₹{totalPrice? totalPrice : 0}</span>
           </h3>
           <button
             onClick={() => navigate("/checkout")}

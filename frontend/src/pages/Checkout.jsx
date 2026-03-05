@@ -47,7 +47,7 @@ const CheckOut = () => {
       <div className="flex flex-col border border-gray-200 rounded-lg p-4 mb-4 ">
         <p className="flex justify-between text-lg font-medium text-gray-700 ">
           <span className="">Total Amount:</span>
-          <span className="text-green-600 font-semibold">₹{totalPrice}</span>
+          <span className="text-green-600 font-semibold">₹{totalPrice? totalPrice:0}</span>
         </p>
       </div>
    </div>
