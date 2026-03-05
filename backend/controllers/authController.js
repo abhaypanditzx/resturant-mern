@@ -135,7 +135,11 @@ const loginUser = async (req, res) => {
 };
 const logoutUser = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     return res.json({ msg: "user logged out  successfully", success: true });
   } catch (err) {
     return res.json({ msg: "internal server error", success: false });
@@ -181,7 +185,11 @@ const isAdmin  = async(req,res)=>{
 
 const logoutAdmin = async (req, res) => {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
     return res.json({ msg: "Admin logged out  successfully", success: true });
   } catch (err) {
     return res.json({ msg: "internal server error", success: false });
