@@ -55,7 +55,7 @@ const Cart = () => {
                   {item?.quantity}
                 </td>
                 <td className="py-3 px-4 items-center space-x-3">
-                  ${item.menuItem.price}
+                  ₹{item?.menuItem?.price}
                 </td>
               </tr>
             ))}
