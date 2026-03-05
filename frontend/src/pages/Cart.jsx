@@ -5,7 +5,7 @@ const Cart = () => {
   const { cart, totalPrice, navigate, addToCart, removeFromCart } =
     useContext(AppContext);
 
-  if (!cart || !cart.items || !cart.items.length === 0) {
+  if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center  h-64">
         <h1 className="text-gray-700 text-2xl font-semibold">no cart found</h1>
@@ -30,31 +30,30 @@ const Cart = () => {
                 key={item._id}
                 className="border-t border-gray-200 hover:bg-gray-50"
               >
-                <td className="py-3 px-4 items-center space-x-3">
-                  <div className="flex flex-col justify-center items-center  w-fit   ">
+                <td className="py-3 px-4">
+                  <div className="flex items-center space-x-3">
                     <img
                       src={item?.menuItem?.image}
                       alt={item?.menuItem?.name}
-                      className="h-12 w-12 border border-gray-400  rounded-full object-cover overflow-hidden"
+                      className="h-12 w-12 border border-gray-400 rounded-full object-cover overflow-hidden"
                     />
-                    {/* add items and remove from cart  */}
-                    <div className="flex  w-fit shadow-gray-350 rounded-lg shadow-md  mt-2 px-4 py-2  items-center ">
-                      <button onClick={() => removeFromCart(item?.menuItem?._id)}>
-                        <Minus
-                          className={`h-5 w-5 ${item.quantity === 0 ? "text-gray-400" : "text-gray-600"} cursor-pointer hover:gray-700`}
-                        />
-                      </button>
-                      <span className="text-sm text-gray-400">(Qty)</span>
-                      <button onClick={() => addToCart(item?.menuItem?._id)}>
-                        <Plus className="h-5 w-5 cursor-pointer hover:gray-700 text-gray-600" />
-                      </button>
-                    </div>
+                    <span className="font-medium text-gray-800">{item?.menuItem?.name}</span>
                   </div>
                 </td>
-                <td className="py-3 px-4 items-center space-x-3">
-                  {item?.quantity}
+                <td className="py-3 px-4">
+                  <div className="flex items-center space-x-3 w-fit shadow-gray-350 rounded-lg shadow-md px-3 py-1">
+                    <button onClick={() => removeFromCart(item?.menuItem?._id)}>
+                      <Minus
+                        className={`h-4 w-4 ${item.quantity === 0 ? "text-gray-400" : "text-gray-600"} cursor-pointer hover:text-gray-700`}
+                      />
+                    </button>
+                    <span className="text-sm font-semibold">{item?.quantity}</span>
+                    <button onClick={() => addToCart(item?.menuItem?._id)}>
+                      <Plus className="h-4 w-4 cursor-pointer hover:text-gray-700 text-gray-600" />
+                    </button>
+                  </div>
                 </td>
-                <td className="py-3 px-4 items-center space-x-3">
+                <td className="py-3 px-4 text-gray-700 font-medium">
                   ₹{item?.menuItem?.price}
                 </td>
               </tr>
@@ -63,7 +62,7 @@ const Cart = () => {
         </table>
         <div className="flex mt-6 items-center justify-between">
           <h3 className="font-semibold text-xl ">
-            Total: <span className="text-green-600">₹{totalPrice? totalPrice : 0}</span>
+            Total: <span className="text-green-600">₹{totalPrice ? totalPrice : 0}</span>
           </h3>
           <button
             onClick={() => navigate("/checkout")}

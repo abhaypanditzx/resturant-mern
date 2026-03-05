@@ -50,7 +50,7 @@ const Contact = () => {
           alt="Restaurant ambiance"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/10" />
+        <div className="absolute inset-0 bg-linear-to-t from-stone-950 via-stone-950/60 to-stone-950/10" />
         <div className="relative z-10 px-8 md:px-16 pb-12">
           <p className="text-amber-500 text-xs tracking-[0.3em] uppercase font-medium mb-3">
             Reserve Your Evening
