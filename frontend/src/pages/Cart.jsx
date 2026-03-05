@@ -63,7 +63,7 @@ const Cart = () => {
         </table>
         <div className="flex mt-6 items-center justify-between">
           <h3 className="font-semibold text-xl ">
-            Total: <span className="text-green-600">${totalPrice}</span>
+            Total: <span className="text-green-600">₹{totalPrice}</span>
           </h3>
           <button
             onClick={() => navigate("/checkout")}
