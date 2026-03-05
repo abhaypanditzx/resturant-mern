@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Eye, EyeClosed, Lock, Mail } from "lucide-react";
 import { AppContext } from "../../context/AppContext";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 const AdminLogin = () => {
   const { navigate, api, loading, setLoading, setAdmin, admin } =
     useContext(AppContext);
@@ -56,6 +56,7 @@ const AdminLogin = () => {
             onChange={(e) => handleChange(e)}
             required
           />
+      
         </div>
         <div className="flex items-center relative mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
           <Lock height={16} width={20} className="text-[#6B7280]" />
@@ -70,21 +71,21 @@ const AdminLogin = () => {
             required
           />
 
-          {!isPasswordVisible ? (
-            <Eye
-              height={16}
-              width={20}
-              className="text-[#6B7280] absolute right-2 cursor-pointer hover:text-gray-400 transition-colors"
-              onClick={() => setIsPasswordVisible(true)}
-            />
-          ) : (
-            <EyeClosed
-              height={16}
-              width={20}
-              className="text-[#6B7280]  absolute right-2 cursor-pointer  hover:text-gray-400 transition-colors"
-              onClick={() => setIsPasswordVisible(false)}
-            />
-          )}
+             {!isPasswordVisible ? (
+                      <EyeClosed
+                        height={16}
+                        width={20}
+                        className="text-[#6B7280] absolute right-2 cursor-pointer hover:text-gray-400 transition-colors"
+                        onClick={() => setIsPasswordVisible(true)}
+                      />
+                    ) : (
+                      <Eye
+                        height={16}
+                        width={20}
+                        className="text-[#6B7280]  absolute right-2 cursor-pointer  hover:text-gray-400 transition-colors"
+                        onClick={() => setIsPasswordVisible(false)}
+                      />
+                    )}
         </div>
 
         <button
