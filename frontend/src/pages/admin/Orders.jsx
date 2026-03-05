@@ -53,7 +53,7 @@ const Orders = () => {
         {/* items */}
 
         <ul className="space-y-4">
-          {orders.map((item) => (
+          {orders?.map((item) => (
             <li key={item._id} className="boreder rounded-lg p-3 md-2">
               <div className="flex flex-col md:grid md:grid-cols-5  md:items-center gap-2 md:gap-0">
                 <p className="font-medium text-center md:text-left">
@@ -86,7 +86,7 @@ const Orders = () => {
               </div>
               {/* render menu items  */}
               <div className="mt-3">
-                {item.items.map((menu, index) => (
+                {item.items?.map((menu, index) => (
                   <div
                     key={index}
                     className="flex items-center gap-3 bg-gray-50 border rounded-lg p-2 my-2 "

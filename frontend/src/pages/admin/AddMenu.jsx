@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 const AddMenu = () => {
-  const { loading, api, categories,setLoading } = useContext(AppContext);
+  const { loading, api, categories, setLoading } = useContext(AppContext);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -13,12 +13,12 @@ const AddMenu = () => {
     category: "",
     image: null,
   });
-  
+
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const handleChange = (e) => {
-    setFormData(prev=>({ ...prev, [e.target.name]: e.target.value }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
@@ -28,24 +28,24 @@ const AddMenu = () => {
       setLoading(true)
       const form = new FormData();
 
-      form.append("name",formData.name)
-      form.append("price",formData.price)
-      form.append("category",formData.category)
-      form.append("image",formData.image)
-      form.append("description",formData.description)
-      const { data } = await api.post("/api/menu/add",form);
+      form.append("name", formData.name)
+      form.append("price", formData.price)
+      form.append("category", formData.category)
+      form.append("image", formData.image)
+      form.append("description", formData.description)
+      const { data } = await api.post("/api/menu/add", form);
       if (data.success) {
-        
+
         toast.success(data.msg);
       } else {
         toast.error(data.msg);
       }
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setLoading(false)
     }
-    }
+  }
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -53,7 +53,7 @@ const AddMenu = () => {
       setFile(selectedFile);
     }
 
-    setFormData(prev=>({ ...prev, image: selectedFile }));
+    setFormData(prev => ({ ...prev, image: selectedFile }));
     if (selectedFile) {
       setPreview(URL.createObjectURL(selectedFile));
     }
@@ -158,20 +158,20 @@ const AddMenu = () => {
           >
             Category *
           </label>
-          <select 
-          name="category" 
-          onChange={handleChange}
-          value={formData.category}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent">
+          <select
+            name="category"
+            onChange={handleChange}
+            value={formData.category}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:border-transparent">
             <option value="">select a category</option>
-            {categories.map((item) => (
+            {categories?.map((item) => (
               <option value={item._id} key={item._id}>
 
                 {/* <img src={item.image} alt="category-image"  className="h-10 w-10 "/> */}
                 {item.name}
               </option>
             ))}
-         
+
           </select>
         </div>
 

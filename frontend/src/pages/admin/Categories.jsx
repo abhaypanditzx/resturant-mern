@@ -27,7 +27,7 @@ const Categories = () => {
         </div>
         <hr className="w-full  my-4 text-gray-200" />
         <ul>
-          {categories.map((item, index) => (
+          {categories?.map((item, index) => (
             <div key={item._id}>
               <div className="grid grid-cols-3 items-center mb-4">
                 <div className="flex items-center  gap-2 max-w-md">

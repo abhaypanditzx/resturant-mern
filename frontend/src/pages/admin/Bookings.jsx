@@ -59,7 +59,7 @@ const Bookings = () => {
         {/* items */}
 
         <ul className="space-y-4 py-2">
-          {bookings.map((item) => (
+          {bookings?.map((item) => (
             <li
               key={item._id}
               className="border border-gray-700  rounded-lg p-3 md-2"

@@ -58,49 +58,49 @@ const Menu = () => {
         {/* result count  */}
         <div className="mb-6">
           <p className="text-gray-600 text-center">
-{
-  searchQuery ?  (
-    <>
-    Found <span className="font-semibold text-yellow-600">{filteredMenus.length} </span>
-    {
-      filteredMenus.lengh ===1 ? "result": "results"  
-    } for {searchQuery}
-    </>
-  ): (
-       <>
-    Showing <span className="font-semibold text-yellow-600">{filteredMenus.length} </span>
-    {
-      filteredMenus.lengh ===1 ? "dish": "dishes"  
-    } 
-    </>
-  )
-}
+            {
+              searchQuery ? (
+                <>
+                  Found <span className="font-semibold text-yellow-600">{filteredMenus.length} </span>
+                  {
+                    filteredMenus.lengh === 1 ? "result" : "results"
+                  } for {searchQuery}
+                </>
+              ) : (
+                <>
+                  Showing <span className="font-semibold text-yellow-600">{filteredMenus.length} </span>
+                  {
+                    filteredMenus.lengh === 1 ? "dish" : "dishes"
+                  }
+                </>
+              )
+            }
           </p>
         </div>
         {/* menu grid  */}
 
         {
-          filteredMenus.length > 0 ?(
+          filteredMenus.length > 0 ? (
             <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {
-                filteredMenus.map((menu)=>(
-                  <MenuCard menu={menu} key={menu._id}/>
+                filteredMenus?.map((menu) => (
+                  <MenuCard menu={menu} key={menu._id} />
                 ))
               }
             </div>
           )
-          :(
-                  <div className="text-center ">
-                    <p className="text-gray-600">
-                      No results found for "{searchQuery}"
-                    </p>
-                    <button 
-                    onClick={handleClearSearch}
-                    className="px-6 py-3 bg-yellow-600 text-white rounded-full font-semibold transition-colors duration-300">
-                      Clear Search
-                    </button>
-                    </div>
-                )
+            : (
+              <div className="text-center ">
+                <p className="text-gray-600">
+                  No results found for "{searchQuery}"
+                </p>
+                <button
+                  onClick={handleClearSearch}
+                  className="px-6 py-3 bg-yellow-600 text-white rounded-full font-semibold transition-colors duration-300">
+                  Clear Search
+                </button>
+              </div>
+            )
         }
       </div>
     </div>

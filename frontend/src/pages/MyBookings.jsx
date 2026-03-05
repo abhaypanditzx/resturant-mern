@@ -24,7 +24,7 @@ const MyBookings = () => {
         <p className="text-center text-gray-600">You have no bookings yet</p>
       ) : (
         <div className="space-y-6">
-          {myBookings.map((booking) => (
+          {myBookings?.map((booking) => (
             <div
               className="bg-whtie shadow-md rounded-2xl p-5 border border-gray-100 hover:shadow-lg transition "
               key={booking._id}
@@ -59,10 +59,10 @@ const MyBookings = () => {
                 )}
                 <div className="mt-3 text-gray-500 text-sm">
                   Booked on: {" "}
-                  {new Date(booking.createdAt).toLocaleDateString("en-GB",{
-                    day:"2-digit",
-                    month:"short",
-                    year:"numeric"
+                  {new Date(booking.createdAt).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
                   })}
                 </div>
               </div>

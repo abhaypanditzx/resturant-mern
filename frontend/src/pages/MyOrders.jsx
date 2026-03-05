@@ -25,7 +25,7 @@ const MyOrders = () => {
         <p className="text-center text-gray-600 ">You have no orders yet</p>
       ) : (
         <div className="">
-          {myOrders.map((order) => (
+          {myOrders?.map((order) => (
             <div
               key={order._id}
               className="bg-white shadow-md mb-4  rounded-2xl p-5 border border-gray-100 hover:shadow-lg transition"
@@ -39,7 +39,7 @@ const MyOrders = () => {
                 </h3>
                 <span
                   className={`
-                px-3 py-1 text-sm rounded-full ${order.status === "Pending" ? "bg-yellow-100 text-yellow-700" : order.status ==="Preparing"?"bg-green-100 text-green-700" : "bg-red-100 text-green-700"}
+                px-3 py-1 text-sm rounded-full ${order.status === "Pending" ? "bg-yellow-100 text-yellow-700" : order.status === "Preparing" ? "bg-green-100 text-green-700" : "bg-red-100 text-green-700"}
                   `}
                 >
                   {order.status}
@@ -50,16 +50,16 @@ const MyOrders = () => {
                 <p><span className="font-medium ">Payment:</span>{order.paymentMethod}</p>
                 <p><span className="font-medium ">Total:</span>${order.totalAmount}</p>
                 <p><span className="font-medium ">Date:</span>{new Date(order.createdAt).toLocaleDateString()}</p>
-              </div>  
+              </div>
               <div className="mt-4  flex">
                 <p className="text-gray-600 text-sm">
                   <span className="font-medium">
-                    Items: 
+                    Items:
                   </span>
-                  {order.items.length} {order.items.length<=1? " product":" products"}
-                
+                  {order.items.length} {order.items.length <= 1 ? " product" : " products"}
 
-                  
+
+
                 </p>
               </div>
             </div>

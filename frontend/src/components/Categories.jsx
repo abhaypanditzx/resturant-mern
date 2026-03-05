@@ -12,7 +12,7 @@ const Categories = () => {
         </h2>{" "}
         <p>Discover delicious dishes from our carefully created categories</p>
         <div className="grid grid-cols-2 py-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {categories.map((item) => (
+          {categories?.map((item) => (
             <div key={item._id} onClick={() => navigate("/")} className="cursor-pointer group">
               <div className="relative">
                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white group-hover:border-yellow-400 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl">
