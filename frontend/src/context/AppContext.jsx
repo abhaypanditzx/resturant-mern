@@ -150,7 +150,7 @@ const AppContextProvider = ({ children }) => {
     totalPrice,
     removeFromCart,
     setAuthLoading,
-    auth
+    authLoading
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
