@@ -74,7 +74,7 @@ const AppContextProvider = ({ children }) => {
     } catch (error) {
       setUser(null);
       console.log(error);
-    }finally{
+    } finally {
       setAuthLoading(false)
     }
   };
@@ -109,9 +109,13 @@ const AppContextProvider = ({ children }) => {
   };
 
   const adminPath = useLocation().pathname.includes("/admin");
- useEffect(() => {
-    fetchCategories();
-    fetchMenus();
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchCategories(), fetchMenus()]);
+      setLoading(false);
+    };
+    fetchData();
   }, []);
   // user&admin data auth
   useEffect(() => {
@@ -128,7 +132,7 @@ const AppContextProvider = ({ children }) => {
     }
   }, [user]);
 
- 
+
 
   const value = {
     navigate,

@@ -1,6 +1,6 @@
 export default function Testimonial() {
   return (
-    <div className="my-12 flex flex-wrap items-center justify-center gap-6 pt-14">
+    <div className="my-12 flex flex-wrap items-center justify-center gap-18 px-2 pt-14">
       <div className="text-sm w-80 border border-gray-200 pb-6 rounded-lg bg-white shadow-[0px_4px_15px_0px] shadow-black/5">
         <div className="flex flex-col items-center px-5 py-4 relative">
           <img
@@ -10,14 +10,13 @@ export default function Testimonial() {
           />
           <div className="pt-8 text-center">
             <h1 className="text-lg font-medium text-gray-800">
-              Donald Jackman
+              Emily Chen
             </h1>
-            <p className="text-gray-800/80">Content Creator</p>
+            <p className="text-gray-800/80">Food Blogger</p>
           </div>
         </div>
         <p className="text-gray-500 px-6 text-center">
-          I've been using imagify for nearly two years, primarily for Instagram,
-          and it has been incredibly user-friendly, making my work much easier.
+          "The flavors here are absolutely incredible. Every dish is crafted with passion, and the presentation is always spot on. My favorite dining spot in town!"
         </p>
         <div className="flex justify-center pt-4">
           <div className="flex gap-0.5">
@@ -94,14 +93,13 @@ export default function Testimonial() {
           />
           <div className="pt-8 text-center">
             <h1 className="text-lg font-medium text-gray-800">
-              Richard Nelson
+              Marcus Johnson
             </h1>
-            <p className="text-gray-800/80">Instagram Influencer</p>
+            <p className="text-gray-800/80">Regular Customer</p>
           </div>
         </div>
         <p className="text-gray-500 px-6 text-center">
-          I've been using imagify for nearly two years, primarily for Instagram,
-          and it has been incredibly user-friendly, making my work much easier.
+          "I come here every week with my family. The atmosphere is top-notch, the staff is welcoming, and the food always exceeds our expectations!"
         </p>
         <div className="flex justify-center pt-4">
           <div className="flex gap-0.5">
@@ -178,14 +176,13 @@ export default function Testimonial() {
           />
           <div className="pt-8 text-center">
             <h1 className="text-lg font-medium text-gray-800">
-              James Washington
+              Sophia Patel
             </h1>
-            <p className="text-gray-800/80">Marketing Manager</p>
+            <p className="text-gray-800/80">Local Guide</p>
           </div>
         </div>
         <p className="text-gray-500 px-6 text-center">
-          I've been using imagify for nearly two years, primarily for Instagram,
-          and it has been incredibly user-friendly, making my work much easier.
+          "A true hidden gem! The authentic recipes and fresh ingredients transport you straight to culinary heaven. I highly recommend trying their chef's special."
         </p>
         <div className="flex justify-center pt-4">
           <div className="flex gap-0.5">

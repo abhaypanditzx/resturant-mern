@@ -4,9 +4,19 @@ import { AppContext } from "../context/AppContext"
 import { ChevronLeft } from "lucide-react"
 const MenuDetails = () => {
   const { id } = useParams();
-  const { menus, navigate, addToCart } = useContext(AppContext)
+  const { menus, navigate, addToCart, loading } = useContext(AppContext)
 
   const menu = menus.find((menu) => menu._id === id)
+
+  if (loading) {
+    return (
+      <div className="flex bg-gray-50 flex-col items-center justify-center min-h-[70vh]">
+        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500 font-medium tracking-wide">Loading Menu Details...</p>
+      </div>
+    );
+  }
+
   return menu ? (
     <div className="max-w-6xl w-full px-6">
       <p>
