@@ -9,12 +9,12 @@ import {
   ShoppingCart,
   User,
   UserCircle,
-
+  Utensils,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 const Navbar = () => {
-  const { navigate, user, setUser, api,cartCount,authLoading } = useContext(AppContext);
+  const { navigate, user, setUser, api, cartCount, authLoading } = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
@@ -25,7 +25,7 @@ const Navbar = () => {
         setUser(null);
         toast.success(data.msg);
         navigate("/");
-      }else{
+      } else {
         toast.error(data.msg)
       }
     } catch (error) {
@@ -76,11 +76,11 @@ const Navbar = () => {
             >
               <ShoppingCart size={22} className="text-gray-700" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-base rounded-full w-5 h-5 flex items-center justify-center font-medium">
-                {cartCount>0? cartCount : 0}
+                {cartCount > 0 ? cartCount : 0}
               </span>
             </button>
             <div className="hidden md:block">
-              {authLoading? null :  user ? (
+              {authLoading ? null : user ? (
                 <div className="relative ">
                   <button
                     className="p-2 hover:bg-gray-100  rounded-lg transition-colors"
@@ -100,7 +100,7 @@ const Navbar = () => {
                         className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                       >
                         <Calendar size={18} className="mr-3" />
-                      My Bookings
+                        My Bookings
                       </Link>
                       <Link
                         to={"/my-orders"}

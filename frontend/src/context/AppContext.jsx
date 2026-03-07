@@ -75,7 +75,7 @@ const AppContextProvider = ({ children }) => {
       setUser(null);
       console.log(error);
     } finally {
-      setAuthLoading(false)
+      setAuthLoading(false);
     }
   };
   const getAdmin = async () => {
@@ -93,18 +93,20 @@ const AppContextProvider = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const { data } = await api.get("/api/category/all");
-      setCategories(data.categories);
+      setCategories(data.categories || []);
     } catch (error) {
       console.log(error);
+      setCategories([]); // Reset to empty array on error
     }
   };
 
   const fetchMenus = async () => {
     try {
       const { data } = await api.get("/api/menu/all");
-      setMenus(data.menuItems);
+      setMenus(data.menuItems || []);
     } catch (error) {
       console.error(error);
+      setMenus([]); // Reset to empty array on error
     }
   };
 
@@ -132,8 +134,6 @@ const AppContextProvider = ({ children }) => {
     }
   }, [user]);
 
-
-
   const value = {
     navigate,
     loading,
@@ -154,7 +154,7 @@ const AppContextProvider = ({ children }) => {
     totalPrice,
     removeFromCart,
     setAuthLoading,
-    authLoading
+    authLoading,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
